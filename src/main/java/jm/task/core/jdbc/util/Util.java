@@ -51,11 +51,14 @@ public class Util {
                 sessionFactory = (SessionFactory) configuration.buildSessionFactory(builder.build());
 
             } catch (Exception e) {
-                System.out.println("Исключение!" + e);
+                System.out.println("Исключение! в getSessionFactory!!! " + e);
             }
         }
         return sessionFactory;
     }
+
+
+   
 
 //// Это с ролика индуса на ютуюе, не работает
     /*
