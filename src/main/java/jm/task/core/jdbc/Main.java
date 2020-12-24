@@ -67,5 +67,9 @@ public class Main {
         UserDaoHibernateImpl delete = new UserDaoHibernateImpl();
         delete.dropUsersTable();
         System.out.println("таблица удалена");
+
+        List<User> listUserHibernate2 = userHibernate.getAllUsers();
+        System.out.println(listUserHibernate2.toString());
+        System.out.println("___________________");
     }
 }

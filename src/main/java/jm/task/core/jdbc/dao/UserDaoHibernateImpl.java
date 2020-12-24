@@ -16,19 +16,15 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void createUsersTable() {
         Session session =  Util.getSessionFactory().openSession();
-        Transaction tx2 = session.beginTransaction();
-        session.createSQLQuery("create table if not exists USER ( id int primary key auto_increment,   name varchar(200) null," +
-                "    lastName varchar(200) null,    age int null )");
-        tx2.commit();
+        session.createSQLQuery("create table if not exists USER ( id int primary key auto_increment,   name varchar(200)," +
+                "    lastName varchar(200),    age int)").executeUpdate();
         session.close();
     }
 
     @Override
     public void dropUsersTable() {
         Session session =  Util.getSessionFactory().openSession();
-        Transaction tx2 = session.beginTransaction();
-        session.createSQLQuery("drop table if exists USER");
-        tx2.commit();
+        session.createSQLQuery("drop table if exists USER").executeUpdate();
         session.close();
     }
 
@@ -69,9 +65,7 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         Session session =  Util.getSessionFactory().openSession();
-        Transaction tx2 = session.beginTransaction();
-        session.createSQLQuery("delete from USER");
-        tx2.commit();
+        session.createSQLQuery("delete from USER").executeUpdate();
         session.close();
     }
 }
