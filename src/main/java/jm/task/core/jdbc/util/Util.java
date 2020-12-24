@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 
 public class Util {
@@ -36,7 +37,26 @@ public class Util {
         return connection;
     }
 
-    ///пример с javarush
+    public static SessionFactory getSessionFactory() {
+
+        Configuration configuration = new Configuration();
+
+        Properties prop = new Properties();
+        prop.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+        prop.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/new_db?useSSL=false&serverTimezone=UTC");
+        prop.setProperty("hibernate.connection.username", "root");
+        prop.setProperty("hibernate.connection.password", "qweQwe52");
+        prop.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
+        prop.setProperty("show_sql", "true");
+        prop.setProperty("hbm2ddl.auto", "create-drop");
+        configuration.addProperties(prop);
+        configuration.addAnnotatedClass(User.class);
+        return configuration.buildSessionFactory();
+
+    }
+
+
+/*    ///пример с javarush
 
     private static SessionFactory sessionFactory;
 
@@ -56,6 +76,50 @@ public class Util {
         }
         return sessionFactory;
     }
+*/
+
+    /*
+     public static void main(String[] args) {
+        Properties prop = new Properties();
+        prop.setProperty("connection.url", "jdbc:mysql://localhost:3306/my_db?useSSL=false&amp;serverTimezone=UTC");
+        prop.setProperty("connection.driver_class", "com.mysql.cj.jdbc.Driver");
+        prop.setProperty("hibernate.connection.username", "root");
+        prop.setProperty("hibernate.connection.password", "root");
+        prop.setProperty("hibernate.current_session_context_class", "thread");
+        prop.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        prop.setProperty("show_sql", "true");
+        SessionFactory factory = new Configuration()
+                .addProperties(prop)
+                .addAnnotatedClass(User.class)
+                .buildSessionFactory();
+//        SessionFactory factory = new Configuration()
+//                .configure("hibernate.cfg.xml")
+//                .addAnnotatedClass(User.class)
+//                .buildSessionFactory();
+        Session session = factory.getCurrentSession();
+        User user = new User("Ivan", "Pushkin", (byte) 30);
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+    }
+
+
+
+
+
+
+    // Можно попробовать configuration.setProperties(prop);
+// вместо configuration.addProperties(prop);
+// Еще у тебя нет ServiceRegistry
+ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+	.applySettings(configuration.getProperties())
+	.build();
+sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+     */
+
+
+
+
 
 
    
